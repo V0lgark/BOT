@@ -31,9 +31,10 @@ async def on_message(message):
         print("pong")
 
 @client.event
-async def on_raw_reaction_add(reaction, user):
+async def on_reaction_add(reaction, user):
     channel = reaction.message.channel
     await channel.send('{} a ajouté la réaction :  {} au message : {}'.format(user.name, reaction.emoji, reaction.message.content))
+
 async def on_raw_reaction_remove(reaction, user):
     channel = reaction.message.channel
     await channel.send('{} a retiré la réaction : {} au message : {}'.format(user.name, reaction.emoji, reaction.message.content))
