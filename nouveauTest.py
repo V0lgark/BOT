@@ -10,7 +10,7 @@ client = discord.Client(intents=default_intents)
 
 @client.event
 async def on_ready():
-    print('Le bot est prêt, sous le nom {0.user}'.format(client))
+    print('Le bot est prêt, sous le nom {0.user} !'.format(client))
 
 @client.event
 async def on_message(message):
