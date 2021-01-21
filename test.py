@@ -13,4 +13,4 @@ async def delete(ctx, number_of_messages: int):
     for each_message in messages:
             await each_message.delete()
 
-bot.run('ODAxMjU5NDQ2NDgzNDE5MTc4.YAeFAg.1A5-0URDYfoAe1z5ctGZL5Xqua8')
+bot.run('')
