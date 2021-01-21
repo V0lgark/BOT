@@ -14,7 +14,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content.startswith("!del"):
+    if message.content.startswith("!dele"):
         number = int(message.content.split()[1])
         messages = await message.channel.history(limit=number + 1).flatten()
         for each_message in messages:
