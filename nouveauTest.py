@@ -7,22 +7,22 @@ load_dotenv(dotenv_path="../config")
 default_intents = discord.Intents.default()
 default_intents.members = True
 client = discord.Client(intents=default_intents)
-
+id_bot = client.user
 @client.event
 async def on_ready():
-    print('Le bot est prêt, sous le nom {0.user} !'.format(client))
+    print('Le bot est prêt, sous le nom {} !'.format(client.user))
 
 @client.event
 async def on_message(message):
-    if message.content.startswith("!dele"):
+    if message.content.startswith("!del"):
         number = int(message.content.split()[1])
         messages = await message.channel.history(limit=number + 1).flatten()
         for each_message in messages:
             await each_message.delete()
 
-    if message.content.startswith("!reaction"):
-        emojis = ['yum', 'grimacing', 'smirk']
-        await message.channel.send("salut mec je vais t'ajouter des réactions !")
+    if message.content.startswith("!re"):
+        emojis = ['❤','❌']
+        await message.channel.send("Ton message va être soumis au sondage du public ! :eyes:")
         for emoji in emojis:
             await message.add_reaction(emoji)
 
@@ -33,11 +33,15 @@ async def on_message(message):
 @client.event
 async def on_reaction_add(reaction, user):
     channel = reaction.message.channel
-    await channel.send('{} a ajouté la réaction :  {} au message : {} écrit par {}'.format(user.name, reaction.emoji, reaction.message.content, reaction.message.author))
+    if (reaction.me != id_bot):
+        await channel.send('{} a ajouté la réaction :  {} au message : "{}" écrit par {}'.format(user.name, reaction.emoji, reaction.message.content, reaction.message.author))
 
-async def on_raw_reaction_remove(reaction, user):
-    channel = reaction.message.channel
-    await channel.send('{} a retiré la réaction : {} au message : {}'.format(user.name, reaction.emoji, reaction.message.content))
+@client.event
+async def on_raw_reaction_remove(payload):
+    print("Je l'ai vu gros nullos")
+    salon = payload.channel_id
+    channel = client.get_channel(salon)
+    await channel.send('{} a retiré la réaction : {} au message'.format(payload.message_id,payload.emoji))
 
 
 @client.event
